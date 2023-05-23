@@ -24,18 +24,18 @@
                         </tr>
                     </thead>
                     <tbody>
+
+
                         @forelse ($user as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->email }}</td>
-                                <td>{{ $data->role }}</td>
+                                <td>{{ $data->roles->name }}</td>
                                 <td>
                                     <div class="row">
                                         <form action="{{ route('users.destroy', $data->id) }}"
                                             onsubmit="return confirm('Apakah Anda Yakin ?')" method="post">
-                                            <a href="{{ route('users.edit .edit', $data->id) }}"
-                                                class="btn btn-sm btn-primary">Edit</a>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger">Hapus</button>

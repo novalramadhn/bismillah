@@ -28,14 +28,14 @@
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="text" id="kode_mapel" name="password"
+                                    <input type="text" id="password" name="password"
                                         class="form-control @error('password') is-invalid @enderror">
                                 </div>
                                 <div class="form-group">
-                                    <label for="role">Role</label>
-                                    <select id="role" name="role"
-                                        class="select2bs4 form-control @error('role') is-invalid @enderror">
-                                        <option value="{{ old('role') }}">-- Pilih Role User --</option>
+                                    <label for="role_id">Role</label>
+                                    <select id="role_id" name="role_id"
+                                        class="select2bs4 form-control @error('role_id') is-invalid @enderror">
+                                        <option value="{{ old('role_id') }}">-- Pilih Role User --</option>
                                         <option value="admin">Admin</option>
                                         <option value="guru">Guru</option>
                                     </select>

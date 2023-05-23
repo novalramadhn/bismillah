@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        $roles = Role::select('id', 'name')->get();
-        return view('admin.layouts.user.index', compact('user','roles'));
+        
     }
 
     /**
@@ -27,9 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        $roles = Role::select('id', 'name')->get();
-        return view('admin.layouts.user.create', compact('users','roles'));
+        //
     }
 
     /**
@@ -40,26 +34,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
-            'role_id' => 'required',
-            'password' => 'required',
-        ]);
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role_id' => $request->role_id,
-            'password' => $request->password,
-        ]);
-
-        if (!$request) {
-            return redirect()->route('users.create')->with(['error' => 'Data gagal disimpan!']);
-        } else {
-            return redirect()->route('users.index')->with(['success' => 'Data berhasil disimpan!']);
-        }
-
+        //
     }
 
     /**

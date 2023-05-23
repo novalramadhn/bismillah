@@ -56,12 +56,6 @@
                     </a>
                     <ul class="nav nav-treeview ml-4">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" id="DataJadwal">
-                                <i class="fas fa-calendar-alt nav-icon"></i>
-                                <p>Data Jadwal</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="{{ route('gurus.index') }}" class="nav-link" id="DataGuru">
                                 <i class="fas fa-users nav-icon"></i>
                                 <p>Data Guru</p>
@@ -142,6 +136,12 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
+                        <i class="fas fa-calendar-alt nav-icon"></i>
+                        <p>Jadwal Pelajaran</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-file-signature"></i>
                         <p>
                             Nilai
@@ -149,15 +149,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-clipboard"></i>
-                        <p>
-                            Pengumuman
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/logout" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>
                             Sign Out

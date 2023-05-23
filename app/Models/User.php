@@ -20,15 +20,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role_id',
         'password',
-        'id_guru',
+
     ];
 
-    public function guru($id)
-    {
-        $guru = Guru::where('id_guru', $id)->first();
-        return $guru;
-    }
+    protected $table ='users';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,4 +45,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
 }
