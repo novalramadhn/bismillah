@@ -19,6 +19,11 @@ class Kelas extends Model
 
     public function siswas()
     {
-        return $this->hasMany(Siswa::class, 'id');
+        return $this->hasMany(Siswa::class, 'siswa_id');
+    }
+
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwal::class, 'kelas_id');
     }
 }

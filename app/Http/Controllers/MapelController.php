@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mapel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MapelController extends Controller
 {
@@ -107,12 +108,8 @@ class MapelController extends Controller
 
     public function deleteAll(Mapel $mapel)
     {
-        $mapel = Mapel::all();
-        if ($mapel->count() >= 1) {
-            Mapel::whereNotNull('id')->delete();
-            return redirect()->back()->with('success', 'Data table mapel berhasil dihapus!');
-        } else {
-            return redirect()->back()->with('warning', 'Data table mapel kosong!');
-        }
+       DB::table('mapels')->delete();
+       return redirect()->route('mapels.index');
+
     }
 }

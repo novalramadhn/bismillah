@@ -20,3 +20,4 @@
 <link rel="stylesheet" href="{{ asset('AdminLTE-3.2.0/plugins/daterangepicker/daterangepicker.css') }}">
 <!-- summernote -->
 <link rel="stylesheet" href="{{ asset('AdminLTE-3.2.0/plugins/summernote/summernote-bs4.min.css') }}">
+<link href="{{ asset('mdrsh.png') }}" rel="shortcut icon">

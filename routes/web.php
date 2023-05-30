@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MapelController;
 use App\Models\Mapel;
 use Illuminate\Support\Facades\Route;
 
@@ -35,14 +36,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/siswas', \App\Http\Controllers\SiswaController::class)->middleware('auth');
 
     //Jadwal
-
+    Route::resource('/jadwals', \App\Http\Controllers\JadwalController::class)->middleware('auth');
 
     // kelas
     Route::resource('/kelas', \App\Http\Controllers\KelasController::class)->middleware('auth');
 
     //mapel
     Route::resource('/mapels', \App\Http\Controllers\MapelController::class)->middleware('auth');
-    Route::delete('/mapels/deleteAll', 'MapelController@deleteAll')->name('mapel.deleteAll');
+    Route::delete('/mapels',[MapelController::class, 'deleteAll'])->name('mapel.deleteAll');
 
     //user
     Route::resource('/users', \App\Http\Controllers\UserController::class)->middleware('auth');

@@ -19,6 +19,17 @@
                         <i class="nav-icon fas fa-minus-circle"></i> &nbsp; Drop
                     </button>
                 </h3>
+                <form action="{{ route('gurus.index') }}" method="GET">
+                    <div class="d-flex flex-row-reverse">
+                        <div class="input-group input-group-sm mb-3 col-4 ">
+                            <input type="text" name="keyword" class="form-control"
+                                placeholder="Masukkan Nama/NIP">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Cari</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">

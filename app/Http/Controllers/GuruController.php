@@ -15,9 +15,13 @@ class GuruController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $gurus = Guru::all();
+        $keyword = $request->get('keyword');
+        $gurus = Guru::when($keyword, function ($query) use ($keyword) {
+            $query->where('nama_guru', 'like', "%{$keyword}%")
+            ->orWhere('nip', 'like', "%{$keyword}%");
+        })->paginate(10);
         $mapels = Mapel::orderBy('nama_mapel')->get();
         return view('admin.layouts.guru.index', compact('gurus', 'mapels'));
     }
@@ -39,7 +43,7 @@ class GuruController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Guru $guru)
     {
         $this->validate($request, [
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -52,11 +56,15 @@ class GuruController extends Controller
             'mapel_id' => 'required',
         ]);
 
-        $image = $request->file('img');
-        $image->storeAs('public/gurus', $image->getClientOriginalName());
+        $imageName = $request->nama_guru . '.' . $request->img->extension();
+
+        $request->img->storeAs('public/gurus', $imageName);
+
+        // $image = $request->file('img');
+        // $image->storeAs('public/gurus', $image->getClientOriginalName());
 
         Guru::create([
-            'img' => $image->getClientOriginalName(),
+            'img' => $imageName,
             'nip' => $request->nip,
             'nama_guru' => $request->nama_guru,
             'jk' => $request->jk,
@@ -66,12 +74,9 @@ class GuruController extends Controller
             'mapel_id' => $request->mapel_id,
         ]);
 
-        if (!$request) {
-            return redirect()->route('gurus.create')->with(['error' => 'Data gagal disimpan!']);
-        } else {
-            return redirect()->route('gurus.index')->with(['success' => 'Data berhasil disimpan!']);
-        }
+        return redirect()->route('gurus.index')->with('success', 'Data berhasil ditambah!');
     }
+
 
     /**
      * Display the specified resource.
@@ -124,15 +129,13 @@ class GuruController extends Controller
         if ($request->hasFile('img')) {
 
 
-            $image = $request->file('img');
-            $image->storeAs('public/gurus', $image->getClientOriginalName());
+            $imageName = $request->nama_guru . '.' . $request->img->extension();
+            $request->img->storeAs('public/gurus', $imageName);
 
-
-            Storage::delete('public/gurus' . $guru->image);
-
+            Storage::delete('public/gurus' . $guru->img);
 
             $guru->update([
-                'img' => $image->getClientOriginalName(),
+                'img' => $imageName,
                 'nama_guru' => $request->nama_guru,
                 'jk' => $request->jk,
                 'tmp_lahir' => $request->tmp_lahir,

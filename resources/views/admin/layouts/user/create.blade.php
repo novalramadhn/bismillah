@@ -35,9 +35,10 @@
                                     <label for="role_id">Role</label>
                                     <select id="role_id" name="role_id"
                                         class="select2bs4 form-control @error('role_id') is-invalid @enderror">
-                                        <option value="{{ old('role_id') }}">-- Pilih Role User --</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="guru">Guru</option>
+                                        <option value="">-- Pilih Role --</option>
+                                        @foreach ($roles as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

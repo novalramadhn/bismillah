@@ -102,6 +102,6 @@ class KelasController extends Controller
     {
         $kela->delete();
 
-        return redirect()->route('kelas.index')->with(['success' => 'Data Berhasil Diahapus!']);
+        return redirect()->Proute('kelas.index')->with(['success' => 'Data Berhasil Diahapus!']);
     }
 }

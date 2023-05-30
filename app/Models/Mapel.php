@@ -18,7 +18,9 @@ class Mapel extends Model
 
     public function gurus()
     {
-        return $this->hasOne(Guru::class, 'id');
+        return $this->hasOne(Guru::class, 'guru_id');
     }
+
+
 
 }

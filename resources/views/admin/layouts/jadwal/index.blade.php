@@ -1,7 +1,7 @@
 @extends('admin.master')
 
-@section('title', 'Admin | Data Kelas')
-@section('breadcrumb', 'Data Kelas')
+@section('title', 'Admin | Data Jadwal')
+@section('breadcrumb', 'Data Jadwal')
 @section('content')
 
 <div class="col-md-12">
@@ -11,16 +11,16 @@
               <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".tambah-jadwal">
                   <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Tambah Data Jadwal
               </button>
-              <a href="#" class="btn btn-success btn-sm my-3" target="_blank"><i class="nav-icon fas fa-file-export"></i> &nbsp; EXPORT EXCEL</a>
+              {{-- <a href="#" class="btn btn-success btn-sm my-3" target="_blank"><i class="nav-icon fas fa-file-export"></i> &nbsp; EXPORT EXCEL</a>
               <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#importExcel">
                   <i class="nav-icon fas fa-file-import"></i> &nbsp; IMPORT EXCEL
-              </button>
+              </button> --}}
               <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#dropTable">
                   <i class="nav-icon fas fa-minus-circle"></i> &nbsp; Drop
               </button>
           </h3>
       </div>
-      <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      {{-- <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <form method="post" action="#" enctype="multipart/form-data">
             <div class="modal-content">
@@ -57,7 +57,7 @@
               </div>
             </form>
           </div>
-        </div>
+        </div> --}}
         <div class="modal fade" id="dropTable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <form method="post" action="#">
@@ -91,7 +91,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $data->nama_kelas }}</td>
                     <td>
-                      <a href="#" class="btn btn-info btn-sm"><i class="nav-icon fas fa-search-plus"></i> &nbsp; Ditails</a>
+                      <a href="{{ route('jadwals.show', $data->id) }}" class="btn btn-info btn-sm"><i class="nav-icon fas fa-search-plus"></i> &nbsp; Details</a>
                     </td>
                   </tr>
                 @endforeach

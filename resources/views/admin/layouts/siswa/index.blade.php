@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">
-                <a href="{{ route('siswas.create') }}" class="btn btn-success btn-sm">
+                    <a href="{{ route('siswas.create') }}" class="btn btn-success btn-sm">
                         <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Tambah Data Siswa</a>
                     </button>
                     {{-- <a href="#" class="btn btn-success btn-sm my-3" target="_blank"><i
@@ -19,6 +19,17 @@
                         <i class="nav-icon fas fa-minus-circle"></i> &nbsp; Drop
                     </button>
                 </h3>
+                <form action="{{ route('siswas.index') }}" method="GET">
+                    <div class="d-flex flex-row-reverse">
+                        <div class="input-group input-group-sm mb-3 col-4 ">
+                            <input type="text" name="keyword" class="form-control"
+                                placeholder="Masukkan Nama/NIS">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Cari</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -113,6 +124,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                {{ $siswas->links() }}
             </div>
         </div>
     </div>

@@ -14,9 +14,14 @@ class SiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $siswas = Siswa::all();
+        $keyword = $request->get('keyword');
+        $siswas = Siswa::when($keyword, function ($query) use ($keyword) {
+            $query->where('nama_siswa', 'like', "%{$keyword}%")
+            ->orWhere('nis', 'like', "%{$keyword}%");
+        })->paginate(10);
+        // $siswas = Siswa::all();
         $kelas = Kelas::orderBy('nama_kelas')->get();
         return view('admin.layouts.siswa.index', compact('siswas', 'kelas'));
     }
@@ -51,11 +56,12 @@ class SiswaController extends Controller
             'kelas_id' => 'required',
         ]);
 
-        $image = $request->file('img');
-        $image->storeAs('public/siswas', $image->getClientOriginalName());
+        $imageName = $request->nama_siswa . '.' . $request->img->extension();
+
+        $request->img->storeAs('public/siswas', $imageName);
 
         Siswa::create([
-            'img' => $image->getClientOriginalName(),
+            'img' => $imageName,
             'nis' => $request->nis,
             'nama_siswa' => $request->nama_siswa,
             'jk' => $request->jk,
@@ -122,15 +128,14 @@ class SiswaController extends Controller
         if ($request->hasFile('img')) {
 
 
-            $image = $request->file('img');
-            $image->storeAs('public/siswas', $image->getClientOriginalName());
+            $imageName = $request->nama_siswa . '.' . $request->img->extension();
+            $request->img->storeAs('public/siswas', $imageName);
 
-
-            Storage::delete('public/siswas' . $siswa->image);
+            Storage::delete('public/siswas' . $siswa->img);
 
 
             $siswa->update([
-                'img' => $image->getClientOriginalName(),
+                'img' => $imageName,
                 'nama_siswa' => $request->nama_siswa,
                 'jk' => $request->jk,
                 'tmp_lahir' => $request->tmp_lahir,
