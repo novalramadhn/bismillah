@@ -91,7 +91,7 @@ class JadwalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,)
     {
         $request->validate(
             [
@@ -105,32 +105,35 @@ class JadwalController extends Controller
         );
 
         // Cek apakah ada jadwal pelajaran yang bertabrakan
+        // $hari = $request->input('hari_id');
+        // $kelas = $request->input('kelas_id');
+        // $mapel = $request->input('mapel_id');
+        // $guru = $request->input('guru_id');
+        // $waktu = $request->input('waktu_id');
+        // $ruang = $request->input('ruang_id');
+
+        // if ($hari == Jadwal::select('hari_id'))
+        // {
+
+        // }
         $existingJadwal = Jadwal::where('hari_id', $request->input('hari_id'))
-            ->where('waktu_id', $request->input('waktu_id'))
             ->where('kelas_id', $request->input('kelas_id'))
-            ->where('guru_id', $request->input('guru_id'))
-            ->get();
+            ->where('waktu_id', $request->input('waktu_id'))
+
+            ->first();
 
         if ($existingJadwal) {
             return redirect()->back()->withInput()->withErrors(['error' => 'Jadwal pelajaran bertabrakan dengan jadwal yang ada.']);
         }
 
-        // // Cek apakah ada jadwal pelajaran dengan kombinasi guru, mapel, dan kelas yang sama
-        // $existingJadwalGuruMapelKelas = Jadwal::where('mapel_id', $request->input('mapel_id'))
-        //     ->where('kelas_id', $request->input('kelas_id'))
-        //     ->where('guru_id', $request->input('guru_id'))
-        //     ->first();
+        $existingJadwalGuru = Jadwal::where('hari_id', $request->input('hari_id'))
+            ->where('waktu_id', $request->input('waktu_id'))
+            ->where('guru_id', $request->input('guru_id'))
 
-        // if ($existingJadwalGuruMapelKelas) {
-        //     return redirect()->back()->withInput()->withErrors(['error' => 'Jadwal pelajaran dengan guru, dan kelas yang sama sudah ada.']);
-        // }
-
-        $existingJadwalMapel = Jadwal::where('guru_id', $request->input('guru_id'))
-            ->where('mapel_id', $request->input('mapel_id'))
             ->first();
 
-        if ($existingJadwalMapel) {
-            return redirect()->back()->withInput()->withErrors(['error' => 'Guru tersebut sudah mengajar mapel yang sama.']);
+        if ($existingJadwalGuru) {
+            return redirect()->back()->withInput()->withErrors(['error' => 'Guru Yang anda inputkan sudah mengajar.']);
         }
 
         Jadwal::create([

@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('nama_guru');
             $table->enum('jk', ['L','P']);
             $table->string('alamat');
-            $table->unsignedInteger('mapel_id');
+            // $table->unsignedInteger('mapel_id');
             $table->timestamps();
 
-            $table->foreign('mapel_id')->references('id')->on('mapels');
+            // $table->foreign('mapel_id')->references('id')->on('mapels');
         });
     }
 

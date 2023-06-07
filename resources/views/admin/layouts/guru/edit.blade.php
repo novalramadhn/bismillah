@@ -19,7 +19,7 @@
                                     <input type="text" id="nama_guru" name="nama_guru" value="{{ $guru->nama_guru }}"
                                         class="form-control @error('nama_guru') is-invalid @enderror">
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="mapel_id">Mapel</label>
                                     <select id="mapel_id" name="mapel_id"
                                         class="select2bs4 form-control @error('mapel_id') is-invalid @enderror">
@@ -30,7 +30,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="tmp_lahir">Tempat Lahir</label>
                                     <input type="text" id="tmp_lahir" name="tmp_lahir" value="{{ $guru->tmp_lahir }}"

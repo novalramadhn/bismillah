@@ -12,14 +12,14 @@
                 <div class="card-body">
                     <div class="row no-gutters ml-2 mb-2 mr-2">
                         <div class="col-md-4">
-                            <img src="{{ Storage::url('gurus/'). $guru->img }}" class="card-img img-thumbnails"
+                            <img src="{{ Storage::url('public/gurus/'). $guru->img }}" class="card-img img-thumbnails"
                                 style="width: 300px">
                         </div>
                         <div class="col-md-1 mb-4"></div>
                         <div class="col-md-7">
                             <h5 class="card-title card-text mb-4">Nama : {{ $guru->nama_guru }}</h5>
                             <h5 class="card-title card-text mb-4">NIP : {{ $guru->nip }}</h5>
-                            <h5 class="card-title card-text mb-4">Guru Mapel : {{ $guru->mapels->nama_mapel }}</h5>
+                            {{-- <h5 class="card-title card-text mb-4">Guru Mapel : {{ $guru->mapels->nama_mapel }}</h5> --}}
                             @if ($guru->jk == 'L')
                                 <h5 class="card-title card-text mb-4">Jenis Kelamin : Laki-laki</h5>
                             @else

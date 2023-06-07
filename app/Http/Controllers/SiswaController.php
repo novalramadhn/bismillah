@@ -58,7 +58,7 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nis' => 'unique:siswas,nis',
             'nama_siswa' => 'required|min:5',
@@ -67,6 +67,8 @@ class SiswaController extends Controller
             'tgl_lahir' => 'required',
             'alamat' => 'required|min:5',
             'kelas_id' => 'required',
+        ],[
+            'nis.unique' => 'NISN sudah terdata'
         ]);
 
         $imageName = $request->nama_siswa . '.' . $request->img->extension();

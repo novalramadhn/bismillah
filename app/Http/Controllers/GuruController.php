@@ -57,7 +57,7 @@ class GuruController extends Controller
      */
     public function store(Request $request, Guru $guru)
     {
-        $this->validate($request, [
+        $request->validate([
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nip' => 'unique:gurus,nip',
             'nama_guru' => 'required|min:4',
@@ -65,12 +65,15 @@ class GuruController extends Controller
             'tmp_lahir' => 'required',
             'tgl_lahir' => 'required',
             'alamat' => 'required|min:5',
-            'mapel_id' => 'required',
+            // 'mapel_id' => 'required',
+        ],[
+            'nip.unique' => 'NIP sudah ada dalam sistem.'
         ]);
 
         $imageName = $request->nama_guru . '.' . $request->img->extension();
 
         $request->img->storeAs('gurus', $imageName);
+
 
         // $image = $request->file('img');
         // $image->storeAs('public/gurus', $image->getClientOriginalName());
@@ -83,10 +86,15 @@ class GuruController extends Controller
             'tmp_lahir' => $request->tmp_lahir,
             'tgl_lahir' => $request->tgl_lahir,
             'alamat' => $request->alamat,
-            'mapel_id' => $request->mapel_id,
+            // 'mapel_id' => $request->mapel_id,
         ]);
 
-        return redirect()->route('admin.guru.index')->with('success', 'Data berhasil ditambah!');
+        if (!$request) {
+            return redirect()->route('admin.guru.create')->with(['error' => 'Data gagal disimpan!']);
+        } else {
+            return redirect()->route('admin.guru.index')->with(['success' => 'Data berhasil disimpan!']);
+        }
+
     }
 
 
@@ -103,8 +111,8 @@ class GuruController extends Controller
 
         // $mapels = Mapel::orderBy('nama_mapel')->get();
         // $mapel = Jadwal::where('guru_id', $guru);
-        $mapels = Mapel::find($id);
-        return view('admin.layouts.guru.detail', compact('guru', 'mapels'));
+        // $mapels = Mapel::find($id);
+        return view('admin.layouts.guru.detail', compact('guru'));
         // return dd($mapel);
     }
 
@@ -113,8 +121,8 @@ class GuruController extends Controller
 
         $guru = Guru::findorfail($id);
 
-        $mapels = Mapel::orderBy('nama_mapel')->get();
-        return view('guru.layouts.guru.detail', compact('guru', 'mapels'));
+        // $mapels = Mapel::orderBy('nama_mapel')->get();
+        return view('guru.layouts.guru.detail', compact('guru'));
     }
 
     /**
@@ -127,8 +135,8 @@ class GuruController extends Controller
     {
         $guru = Guru::findorfail($id);
 
-        $mapels = Mapel::orderBy('nama_mapel')->get();
-        return view('admin.layouts.guru.edit', compact('guru', 'mapels'));
+        // $mapels = Mapel::orderBy('nama_mapel')->get();
+        return view('admin.layouts.guru.edit', compact('guru'));
     }
 
     /**
@@ -148,16 +156,16 @@ class GuruController extends Controller
             'tmp_lahir' => 'required',
             'tgl_lahir' => 'required',
             'alamat' => 'required|min:5',
-            'mapel_id' => 'required',
+            // 'mapel_id' => 'required',
         ]);
 
         if ($request->hasFile('img')) {
 
 
             $imageName = $request->nama_guru . '.' . $request->img->extension();
-            $request->img->storeAs('public/gurus', $imageName);
+            $request->img->storeAs('gurus/', $imageName);
 
-            Storage::delete('public/gurus' . $guru->img);
+            Storage::delete('gurus/' . $guru->img);
 
             $guru->update([
                 'img' => $imageName,
@@ -166,7 +174,7 @@ class GuruController extends Controller
                 'tmp_lahir' => $request->tmp_lahir,
                 'tgl_lahir' => $request->tgl_lahir,
                 'alamat' => $request->alamat,
-                'mapel_id' => $request->mapel_id,
+                // 'mapel_id' => $request->mapel_id,
 
             ]);
         } else {
@@ -178,7 +186,7 @@ class GuruController extends Controller
                 'tmp_lahir' => $request->tmp_lahir,
                 'tgl_lahir' => $request->tgl_lahir,
                 'alamat' => $request->alamat,
-                'mapel_id' => $request->mapel_id,
+                // 'mapel_id' => $request->mapel_id,
             ]);
         }
 
