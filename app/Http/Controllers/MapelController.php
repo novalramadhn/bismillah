@@ -15,7 +15,7 @@ class MapelController extends Controller
      */
     public function index(Request $request)
     {
-        $mapels = Mapel::orderBy('created_at', 'asc')->paginate(5);
+        $mapels = Mapel::orderBy('nama_mapel', 'asc')->paginate(5);
         return view('admin.layouts.mapel.index', compact('mapels'));
     }
 
@@ -37,18 +37,22 @@ class MapelController extends Controller
      */
     public function store(Request $request, Mapel $mapel)
     {
-        $this->validate($request, [
-            'kode_mapel' => 'required',
-            'nama_mapel' => 'required',
+        $request->validate([
+        'kode_mapel' => 'unique:mapels,kode_mapel',
+        'nama_mapel' => 'required',
+    ], [
+        'kode_mapel.unique' => 'Kode mapel sudah ada dalam sistem.'
+    ]);
+
+        Mapel::create([
+            'kode_mapel' => $request->input('kode_mapel'),
+            'nama_mapel' => $request->nama_mapel,
         ]);
 
-        Mapel::create($request->post());
-
-
         if (!$request) {
-            return redirect()->route('mapels.create')->with(['error' => 'Data gagal disimpan!']);
+            return redirect()->route('admin.mapel.create')->with(['error' => 'Data gagal disimpan!']);
         } else {
-            return redirect()->route('mapels.index')->with(['success' => 'Data berhasil disimpan!']);
+            return redirect()->route('admin.mapel.index')->with(['success' => 'Data berhasil disimpan!']);
         }
     }
 
@@ -69,8 +73,9 @@ class MapelController extends Controller
      * @param  \App\Models\Mapel  $mapel
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mapel $mapel)
+    public function edit($id)
     {
+        $mapel = Mapel::findorFail($id);
         return view('admin.layouts.mapel.edit', compact('mapel'));
     }
 
@@ -81,8 +86,9 @@ class MapelController extends Controller
      * @param  \App\Models\Mapel  $mapel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mapel $mapel)
+    public function update(Request $request, $id)
     {
+        $mapel = Mapel::findorFail($id);
         $request->validate([
             'kode_mapel' => 'required',
             'nama_mapel' => 'required',
@@ -90,7 +96,7 @@ class MapelController extends Controller
 
         $mapel->fill($request->post())->save();
 
-        return redirect()->route('mapels.index')->with(['success' => 'Data Berhasil Diahapus!']);
+        return redirect()->route('admin.mapel.index')->with(['success' => 'Data Berhasil Diahapus!']);
     }
 
     /**
@@ -99,17 +105,13 @@ class MapelController extends Controller
      * @param  \App\Models\Mapel  $mapel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mapel $mapel)
+    public function destroy($id)
     {
+        $mapel = Mapel::findorFail($id);
         $mapel->delete();
 
-        return redirect()->route('mapels.index')->with(['success' => 'Data Berhasil Diahapus!']);
+        return redirect()->route('admin.mapel.index')->with(['success' => 'Data Berhasil Diahapus!']);
     }
 
-    public function deleteAll(Mapel $mapel)
-    {
-       DB::table('mapels')->delete();
-       return redirect()->route('mapels.index');
 
-    }
 }

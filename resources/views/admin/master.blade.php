@@ -37,7 +37,7 @@
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard.index') }}">Home</a></li>
                                 <li class="breadcrumb-item active">Dashboard v1</li>
                             </ol>
                         </div><!-- /.col -->
@@ -57,7 +57,7 @@
         <!-- /.content-wrapper -->
         <footer class="main-footer bg-dark">
             <marquee>
-                <strong>Copyright &copy; <script>document.write(new Date().getFullYear());</script> &diams; Madrasah Diniyah KB Permata | Masjid Wali Songo</strong>
+                <strong>Copyright &copy; <script>document.write(new Date().getFullYear());</script> &diams; Academic System Information | MTs Al-Islahiyah Bobosan </strong>
             </marquee>
         </footer>
 

@@ -13,22 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jadwals', function (Blueprint $table) {
+        Schema::create('nilais', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('hari_id');
+            $table->unsignedInteger('siswa_id');
             $table->unsignedInteger('kelas_id');
             $table->unsignedInteger('mapel_id');
-            $table->unsignedInteger('guru_id');
-            $table->time('jam_mulai');
-            $table->time('jam_selesai');
-            $table->unsignedInteger('ruang_id');
+            $table->unsignedInteger('semester_id');
+            $table->integer('tugas');
+            $table->integer('uts');
+            $table->integer('uas');
+            $table->string('grade')->nullable();
             $table->timestamps();
 
-            $table->foreign('hari_id')->references('id')->on('haris');
+            $table->foreign('siswa_id')->references('id')->on('siswas');
             $table->foreign('kelas_id')->references('id')->on('kelas');
             $table->foreign('mapel_id')->references('id')->on('mapels');
-            $table->foreign('guru_id')->references('id')->on('gurus');
-            $table->foreign('ruang_id')->references('id')->on('kelas');
+            $table->foreign('semester_id')->references('id')->on('semesters');
         });
     }
 
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jadwals');
+        Schema::dropIfExists('nilais');
     }
 };

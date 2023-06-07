@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">
-                    <a href="{{ route('users.create') }}" class="btn btn-success btn-sm my-3">
+                    <a href="{{ route('admin.user.create') }}" class="btn btn-success btn-sm my-3">
                         <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Tambah Data User</a>
                 </h3>
             </div>
@@ -34,7 +34,7 @@
                                 <td>{{ $data->roles->name }}</td>
                                 <td>
                                     <div class="row">
-                                        <form action="{{ route('users.destroy', $data->id) }}"
+                                        <form action="{{ route('admin.user.destroy', $data->id) }}"
                                             onsubmit="return confirm('Apakah Anda Yakin ?')" method="post">
                                             @csrf
                                             @method('DELETE')

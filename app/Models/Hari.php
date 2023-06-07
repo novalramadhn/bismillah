@@ -19,6 +19,6 @@ class Hari extends Model
 
     public function jadwal()
 {
-    return $this->hasOne(Jadwal::class, 'id');
+    return $this->hasMany(Jadwal::class, 'id');
 }
 }

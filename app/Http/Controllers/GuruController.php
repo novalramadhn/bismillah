@@ -26,6 +26,17 @@ class GuruController extends Controller
         return view('admin.layouts.guru.index', compact('gurus', 'mapels'));
     }
 
+    public function guru(Request $request)
+    {
+        $keyword = $request->get('keyword');
+        $gurus = Guru::when($keyword, function ($query) use ($keyword) {
+            $query->where('nama_guru', 'like', "%{$keyword}%")
+            ->orWhere('nip', 'like', "%{$keyword}%");
+        })->paginate(10);
+        $mapels = Mapel::orderBy('nama_mapel')->get();
+        return view('guru.layouts.guru.index', compact('gurus', 'mapels'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -47,8 +58,8 @@ class GuruController extends Controller
     {
         $this->validate($request, [
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'nip' => 'required|min:5',
-            'nama_guru' => 'required|min:5',
+            'nip' => 'unique:gurus,nip',
+            'nama_guru' => 'required|min:4',
             'jk' => 'required',
             'tmp_lahir' => 'required',
             'tgl_lahir' => 'required',
@@ -65,8 +76,8 @@ class GuruController extends Controller
 
         Guru::create([
             'img' => $imageName,
-            'nip' => $request->nip,
-            'nama_guru' => $request->nama_guru,
+            'nip' => $request->input('nip'),
+            'nama_guru' =>$request->nama_guru,
             'jk' => $request->jk,
             'tmp_lahir' => $request->tmp_lahir,
             'tgl_lahir' => $request->tgl_lahir,
@@ -74,7 +85,7 @@ class GuruController extends Controller
             'mapel_id' => $request->mapel_id,
         ]);
 
-        return redirect()->route('gurus.index')->with('success', 'Data berhasil ditambah!');
+        return redirect()->route('admin.guru.index')->with('success', 'Data berhasil ditambah!');
     }
 
 
@@ -91,6 +102,15 @@ class GuruController extends Controller
 
         $mapels = Mapel::orderBy('nama_mapel')->get();
         return view('admin.layouts.guru.detail', compact('guru', 'mapels'));
+    }
+
+    public function shows($id)
+    {
+
+        $guru = Guru::findorfail($id);
+
+        $mapels = Mapel::orderBy('nama_mapel')->get();
+        return view('guru.layouts.guru.detail', compact('guru', 'mapels'));
     }
 
     /**
@@ -114,8 +134,9 @@ class GuruController extends Controller
      * @param  \App\Models\Guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Guru $guru)
+    public function update(Request $request, $id)
     {
+        $guru = Guru::findorfail($id);
         $this->validate($request, [
             'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nama_guru' => 'required|min:5',
@@ -157,7 +178,7 @@ class GuruController extends Controller
             ]);
         }
 
-        return redirect()->route('gurus.index')->with(['success' => 'Data Berhasil Diahapus!']);
+        return redirect()->route('admin.guru.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
     /**
@@ -166,10 +187,12 @@ class GuruController extends Controller
      * @param  \App\Models\Guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Guru $guru)
+    public function destroy($id)
     {
+        $guru = Guru::findorfail($id);
         $guru->delete();
 
-        return redirect()->route('gurus.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('admin.guru.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
+
 }

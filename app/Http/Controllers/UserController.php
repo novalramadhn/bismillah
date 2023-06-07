@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -51,13 +52,13 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role_id' => $request->role_id,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
         ]);
 
         if (!$request) {
-            return redirect()->route('users.create')->with(['error' => 'Data gagal disimpan!']);
+            return redirect()->route('admin.user.create')->with(['error' => 'Data gagal disimpan!']);
         } else {
-            return redirect()->route('users.index')->with(['success' => 'Data berhasil disimpan!']);
+            return redirect()->route('admin.user.index')->with(['success' => 'Data berhasil disimpan!']);
         }
 
     }
@@ -102,10 +103,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
+        $user = User::findorFail($id);
         $user->delete();
 
-        return redirect()->route('users.index')->with(['success' => 'Data Berhasil Diahapus!']);
+        return redirect()->route('admin.user.index')->with(['success' => 'Data Berhasil Diahapus!']);
     }
 }

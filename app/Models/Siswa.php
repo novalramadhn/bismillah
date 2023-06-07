@@ -26,4 +26,8 @@ class Siswa extends Model
     {
         return $this->belongsTo(Kelas::class, 'kelas_id');
     }
+    public function nilais()
+    {
+        return $this->hasOne(Nilai::class, 'nilai_id');
+    }
 }

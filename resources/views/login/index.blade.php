@@ -21,8 +21,10 @@
                 <center>
                 <img src="{{ asset('mdrsh.png') }}" alt="madarasah" height="200" width="200" style="margin-bottom: 20px">
                 </center>
-                <h1 class="h3 mb-2 text-center">Sistem Informasi Akademik</h1>
-                <h3 class="h3 mb-3 fw-normal text-center">Madarasah Annashohud Dinniyah Lawang</h3>
+                <h1 class="h3 mb-2 fw-bold text-center">Sistem Informasi Akademik</h1>
+                <h3 class="h3 mb-3 fw-normal text-center">MTs Al - Islahiyah Bobosan</h3>
+                <h2 class="h3 mb-3 text-center">Kediri</h2>
+
                 <form action="/login" method="POST">
                     @csrf
                     @if (Session::has('status'))

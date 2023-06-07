@@ -1,9 +1,9 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <img src="{{ asset('rms.png') }}" alt="AdminLTE Logo"
+        <img src="{{ asset('rms.png') }}" alt="Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-semibold">REMAS WALISONGO</span>
+        <span class="brand-text font-weight-semibold"> AISYAH </span>
     </a>
 
     <!-- Sidebar -->
@@ -15,7 +15,7 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Admin</a>
+                <a href="#" class="">ADMIN</a>
             </div>
         </div>
 
@@ -56,38 +56,38 @@
                     </a>
                     <ul class="nav nav-treeview ml-4">
                         <li class="nav-item">
-                            <a href="{{ route('gurus.index') }}" class="nav-link" id="DataGuru">
+                            <a href="{{ route('admin.guru.index') }}" class="nav-link" id="DataGuru">
                                 <i class="fas fa-users nav-icon"></i>
                                 <p>Data Guru</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('siswas.index') }}" class="nav-link" id="DataSiswa">
+                            <a href="{{ route('admin.siswa.index') }}" class="nav-link" id="DataSiswa">
                                 <i class="fas fa-users nav-icon"></i>
                                 <p>Data Siswa</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('kelas.index') }}" class="nav-link" id="DataKelas">
+                            <a href="{{ route('admin.kelas.index') }}" class="nav-link" id="DataKelas">
                                 <i class="fas fa-home nav-icon"></i>
                                 <p>Data Kelas</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('mapels.index') }}" class="nav-link" id="DataMapel">
+                            <a href="{{ route('admin.mapel.index') }}" class="nav-link" id="DataMapel">
                                 <i class="fas fa-book nav-icon"></i>
                                 <p>Data Mapel</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('users.index') }}" class="nav-link" id="DataUser">
+                            <a href="{{ route('admin.user.index') }}" class="nav-link" id="DataUser">
                                 <i class="fas fa-user-plus nav-icon"></i>
                                 <p>Data User</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item has-treeview" id="liViewTrash">
+                {{-- <li class="nav-item has-treeview" id="liViewTrash">
                     <a href="#" class="nav-link" id="ViewTrash">
                         <i class="nav-icon fas fa-recycle"></i>
                         <p>
@@ -133,15 +133,15 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <li class="nav-item">
-                    <a href="{{ route('jadwals.index') }}" class="nav-link">
+                    <a href="{{ route('admin.jadwal.index') }}" class="nav-link">
                         <i class="fas fa-calendar-alt nav-icon"></i>
                         <p>Jadwal Pelajaran</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.nilai.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-file-signature"></i>
                         <p>
                             Nilai

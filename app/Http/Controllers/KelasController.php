@@ -14,7 +14,7 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $kelas = Kelas::orderBy('created_at', 'asc')->paginate(5);
+        $kelas = Kelas::orderBy('kode_kelas', 'asc')->paginate(6);
         return view('admin.layouts.kelas.index', compact('kelas'));
     }
 
@@ -36,17 +36,22 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        $request = $request->validate([
-            'kode_kelas' => 'required',
+        $request->validate([
+            'kode_kelas' => 'unique:kelas,kode_kelas',
             'nama_kelas' => 'required',
             'ruangan' => 'required'
         ]);
 
-        Kelas::create($request);
+        Kelas::create([
+            'kode_kelas' => $request->input('kode_mapel'),
+            'nama_kelas' => $request->nama_kelas,
+            'ruangan' => $request->ruangan,
+        ]);
+
         if (!$request) {
-            return redirect()->route('kelas.create')->with(['error' => 'Data gagal disimpan!']);
+            return redirect()->route('admin.kelas.create')->with(['error' => 'Data gagal disimpan!']);
         } else {
-            return redirect()->route('kelas.index')->with(['success' => 'Data berhasil disimpan!']);
+            return redirect()->route('admin.kelas.index')->with(['success' => 'Data berhasil disimpan!']);
         }
     }
 
@@ -67,8 +72,10 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kelas $kela)
+    public function edit($id)
     {
+        $kela = Kelas::findorfail($id);
+
         return view('admin.layouts.kelas.edit', compact('kela'));
     }
 
@@ -79,8 +86,9 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kelas $kela)
+    public function update(Request $request, $id)
     {
+        $kela = Kelas::findorfail($id);
         $request->validate([
             'kode_kelas' => 'required',
             'nama_kelas' => 'required',
@@ -89,7 +97,7 @@ class KelasController extends Controller
 
         $kela->fill($request->post())->save();
 
-        return redirect()->route('kelas.index')->with(['success' => 'Data Berhasil Diahapus!']);
+        return redirect()->route('admin.kelas.index')->with(['success' => 'Data Berhasil Diahapus!']);
     }
 
     /**
@@ -98,10 +106,11 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kelas $kela)
+    public function destroy($id)
     {
+        $kela = Kelas::findorFail($id);
         $kela->delete();
 
-        return redirect()->Proute('kelas.index')->with(['success' => 'Data Berhasil Diahapus!']);
+        return redirect()->route('admin.kelas.index')->with(['success' => 'Data Berhasil Diahapus!']);
     }
 }

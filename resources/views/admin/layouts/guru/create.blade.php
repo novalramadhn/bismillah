@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Tambah Data Guru</h3>
                 </div>
-                <form action="{{ route('gurus.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.guru.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="card-body">
@@ -77,7 +77,7 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer">
-                        <a href="{{ route('gurus.index') }}" name="kembali" class="btn btn-default" id="back"><i
+                        <a href="{{ route('admin.guru.index') }}" name="kembali" class="btn btn-default" id="back"><i
                                 class='nav-icon fas fa-arrow-left'></i> &nbsp; Kembali</a> &nbsp;
                         <button name="submit" class="btn btn-primary"><i class="nav-icon fas fa-save"></i> &nbsp;
                             Tambahkan</button>

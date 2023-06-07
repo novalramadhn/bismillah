@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
+use App\Models\Jadwal;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Siswa;
+use App\Models\User;
 use Illuminate\Http\Request;
+
 
 class AdminController extends Controller
 {
@@ -13,9 +20,53 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.layouts.dashboard.dash');
+        $jumlahKelas = Kelas::count();
+        $jumlahGuru = Guru::count();
+        $jumlahSiswa = Siswa::count();
+        $jumlahMapel = Mapel::count();
+        $jumlahJadwal = Jadwal::count();
+        $jumlahUser = User::count();
+
+        $jumlahGuruL = Guru::where('jk', 'L')->count();
+        $jumlahGuruP = Guru::where('jk', 'P')->count();
+        $jumlahSiswaL = Siswa::where('jk', 'L')->count();
+        $jumlahSiswaP = Siswa::where('jk', 'P')->count();
+
+        // $chartGuru = Charts::create('bar', 'highcharts')
+        // ->title('Jumlah Guru berdasarkan Jenis Kelamin')
+        // ->labels(['Laki-laki', 'Perempuan'])
+        // ->values([$jumlahGuruLaki, $jumlahGuruPerempuan])
+        // ->colors(['#3c8dbc', '#f39c12'])
+        // ->render();
+
+        // $chartSiswa = Charts::create('bar', 'highcharts')
+        // ->title('Jumlah Siswa berdasarkan Jenis Kelamin')
+        // ->labels(['Laki-laki', 'Perempuan'])
+        // ->values([$jumlahSiswaLaki, $jumlahSiswaPerempuan])
+        // ->colors(['#3c8dbc', '#f39c12'])
+        // ->render();
+
+        return view('admin.layouts.dashboard.index', compact('jumlahKelas','jumlahGuru','jumlahSiswa','jumlahMapel','jumlahJadwal','jumlahUser',
+        'jumlahGuruL','jumlahGuruP','jumlahSiswaL','jumlahSiswaP'));
     }
 
+    public function login()
+    {
+        $jumlahKelas = Kelas::count();
+        $jumlahGuru = Guru::count();
+        $jumlahSiswa = Siswa::count();
+        $jumlahMapel = Mapel::count();
+        $jumlahJadwal = Jadwal::count();
+        $jumlahUser = User::count();
+
+        $jumlahGuruL = Guru::where('jk', 'L')->count();
+        $jumlahGuruP = Guru::where('jk', 'P')->count();
+        $jumlahSiswaL = Siswa::where('jk', 'L')->count();
+        $jumlahSiswaP = Siswa::where('jk', 'P')->count();
+
+         return view('guru.layouts.dashboard.index', compact('jumlahKelas','jumlahGuru','jumlahSiswa','jumlahMapel','jumlahJadwal','jumlahUser',
+        'jumlahGuruL','jumlahGuruP','jumlahSiswaL','jumlahSiswaP'));
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -16,6 +16,7 @@ class SiswaController extends Controller
      */
     public function index(Request $request)
     {
+
         $keyword = $request->get('keyword');
         $siswas = Siswa::when($keyword, function ($query) use ($keyword) {
             $query->where('nama_siswa', 'like', "%{$keyword}%")
@@ -24,6 +25,18 @@ class SiswaController extends Controller
         // $siswas = Siswa::all();
         $kelas = Kelas::orderBy('nama_kelas')->get();
         return view('admin.layouts.siswa.index', compact('siswas', 'kelas'));
+    }
+
+    public function siswa(Request $request)
+    {
+        $keyword = $request->get('keyword');
+        $siswas = Siswa::when($keyword, function ($query) use ($keyword) {
+            $query->where('nama_siswa', 'like', "%{$keyword}%")
+            ->orWhere('nis', 'like', "%{$keyword}%");
+        })->paginate(10);
+        // $siswas = Siswa::all();
+        $kelas = Kelas::orderBy('nama_kelas')->get();
+        return view('guru.layouts.siswa.index', compact('siswas', 'kelas'));
     }
 
     /**
@@ -47,7 +60,7 @@ class SiswaController extends Controller
     {
         $this->validate($request, [
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'nis' => 'required|min:5',
+            'nis' => 'unique:siswas,nis',
             'nama_siswa' => 'required|min:5',
             'jk' => 'required',
             'tmp_lahir' => 'required',
@@ -62,7 +75,7 @@ class SiswaController extends Controller
 
         Siswa::create([
             'img' => $imageName,
-            'nis' => $request->nis,
+            'nis' => $request->input('nis'),
             'nama_siswa' => $request->nama_siswa,
             'jk' => $request->jk,
             'tmp_lahir' => $request->tmp_lahir,
@@ -72,9 +85,9 @@ class SiswaController extends Controller
         ]);
 
         if (!$request) {
-            return redirect()->route('siswas.createe')->with(['error' => 'Data gagal disimpan!']);
+            return redirect()->route('admin.siswa.create')->with(['error' => 'Data gagal disimpan!']);
         } else {
-            return redirect()->route('siswas.index')->with(['success' => 'Data berhasil disimpan!']);
+            return redirect()->route('admin.siswa.index')->with(['success' => 'Data berhasil disimpan!']);
         }
     }
 
@@ -90,6 +103,14 @@ class SiswaController extends Controller
 
         $kelas = Kelas::orderBy('nama_kelas')->get();
         return view('admin.layouts.siswa.detail', compact('siswa', 'kelas'));
+    }
+
+    public function shows($id)
+    {
+        $siswa = Siswa::findorfail($id);
+
+        $kelas = Kelas::orderBy('nama_kelas')->get();
+        return view('guru.layouts.siswa.detail', compact('siswa', 'kelas'));
     }
 
     /**
@@ -113,8 +134,10 @@ class SiswaController extends Controller
      * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Siswa $siswa)
+    public function update(Request $request, $id)
     {
+
+        $siswa = Siswa::findorfail($id);
         $this->validate($request, [
             'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nama_siswa' => 'required|min:5',
@@ -157,7 +180,7 @@ class SiswaController extends Controller
             ]);
         }
 
-        return redirect()->route('siswas.index')->with(['success' => 'Data Berhasil Diahapus!']);
+        return redirect()->route('admin.siswa.index')->with(['success' => 'Data Berhasil Diahapus!']);
     }
 
     /**
@@ -166,10 +189,12 @@ class SiswaController extends Controller
      * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Siswa $siswa)
+    public function destroy($id)
     {
-        $siswa->delete();
+         $deleteSiswa = Siswa::findorfail($id);
+         $deleteSiswa->delete();
 
-        return redirect()->route('siswas.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('admin.siswa.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
+
 }

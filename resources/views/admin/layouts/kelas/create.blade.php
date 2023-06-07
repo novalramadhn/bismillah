@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Tambah Data Kelas</h3>
                 </div>
-                <form action="{{ route('kelas.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.kelas.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="card-body">
@@ -35,7 +35,7 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer">
-                        <a href="{{ route('kelas.index') }}" name="kembali" class="btn btn-default" id="back"><i
+                        <a href="{{ route('admin.kelas.index') }}" name="kembali" class="btn btn-default" id="back"><i
                                 class='nav-icon fas fa-arrow-left'></i> &nbsp; Kembali</a> &nbsp;
                         <button name="submit" class="btn btn-primary"><i class="nav-icon fas fa-save"></i> &nbsp;
                             Tambahkan</button>

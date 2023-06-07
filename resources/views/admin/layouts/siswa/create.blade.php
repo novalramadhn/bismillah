@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Tambah Data Siswa</h3>
                 </div>
-                <form action="{{ route('siswas.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.siswa.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="card-body">
@@ -42,7 +42,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nip">NIs</label>
+                                    <label for="nip">NIS</label>
                                     <input type="text" id="nis" name="nis"
                                         class="form-control @error('nis') is-invalid @enderror">
                                 </div>
@@ -77,14 +77,14 @@
 
 
                     <div class="card-footer">
-                        <a href="{{ route('siswas.index') }}" name="kembali" class="btn btn-default" id="back"><i
+                        <a href="{{ route('admin.siswa.index') }}" name="kembali" class="btn btn-default" id="back"><i
                                 class='nav-icon fas fa-arrow-left'></i> &nbsp; Kembali</a> &nbsp;
                         <button name="submit" class="btn btn-primary"><i class="nav-icon fas fa-save"></i> &nbsp;
                             Tambahkan</button>
                     </div>
                 </form>
             </div>
-            
+
         </div>
     </div>
 @endsection
