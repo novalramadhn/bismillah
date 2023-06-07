@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\Jadwal;
 use App\Models\Mapel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -69,7 +70,7 @@ class GuruController extends Controller
 
         $imageName = $request->nama_guru . '.' . $request->img->extension();
 
-        $request->img->storeAs('public/gurus', $imageName);
+        $request->img->storeAs('gurus', $imageName);
 
         // $image = $request->file('img');
         // $image->storeAs('public/gurus', $image->getClientOriginalName());
@@ -100,8 +101,11 @@ class GuruController extends Controller
 
         $guru = Guru::findorfail($id);
 
-        $mapels = Mapel::orderBy('nama_mapel')->get();
+        // $mapels = Mapel::orderBy('nama_mapel')->get();
+        // $mapel = Jadwal::where('guru_id', $guru);
+        $mapels = Mapel::find($id);
         return view('admin.layouts.guru.detail', compact('guru', 'mapels'));
+        // return dd($mapel);
     }
 
     public function shows($id)

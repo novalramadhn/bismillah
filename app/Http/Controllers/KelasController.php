@@ -43,7 +43,7 @@ class KelasController extends Controller
         ]);
 
         Kelas::create([
-            'kode_kelas' => $request->input('kode_mapel'),
+            'kode_kelas' => $request->input('kode_kelas'),
             'nama_kelas' => $request->nama_kelas,
             'ruangan' => $request->ruangan,
         ]);
